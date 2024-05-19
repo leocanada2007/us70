@@ -68,7 +68,7 @@ def tab1():
                    'PCE_YoY',
                    'Real_GDP_YoY']
     
-    df = pd.read_csv(r'E:\Investments\Readings\US_Equity_70\data\daily.csv')
+    df = pd.read_csv('daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
 
     
