@@ -494,11 +494,3 @@ def run():
     elif select_tab == '资本市场':
         tab4()      
         
-      
- 
-       
-    
-if __name__ == "__main__":
-    run()              
-if __name__ == "__main__":
-    run()              
