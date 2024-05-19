@@ -1,15 +1,10 @@
 
-from pandas_datareader import data as pdr
+
 import streamlit as st, pandas as pd, numpy as np, yfinance as yf
-import matplotlib.pyplot as plt
 import plotly.express as px
 yf.pdr_override() # <== that's all it takes :-)
-import cufflinks as cf
 import datetime
-from streamlit_autorefresh import st_autorefresh
 
-
-import altair as alt
 
 
 
