@@ -1,8 +1,7 @@
 
 
-import streamlit as st, pandas as pd, numpy as np, yfinance as yf
+import streamlit as st, pandas as pd, numpy as np
 import plotly.express as px
-yf.pdr_override() # <== that's all it takes :-)
 import datetime
 
 
