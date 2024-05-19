@@ -194,7 +194,7 @@ def tab1():
 
 def tab2():
     
-    df = pd.read_csv(r'E:\Investments\Readings\US_Equity_70\data\daily.csv')
+    df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
     
     start_date = st.sidebar.date_input('Start date', datetime.datetime(1945, 1, 1))
@@ -263,10 +263,10 @@ def tab3():
     
     # Import Data
     
-    df1 = pd.read_csv(r'E:\Investments\Readings\US_Equity_70\data\monthly.csv')
+    df1 = pd.read_csv(data/monthly.csv')
     df1['DATE'] = pd.to_datetime(df1['DATE']).dt.date
     
-    df2 = pd.read_csv(r'E:\Investments\Readings\US_Equity_70\data\quarterly.csv')
+    df2 = pd.read_csv(data/quarterly.csv')
     df2['DATE'] = pd.to_datetime(df2['DATE']).dt.date
     
 
@@ -380,17 +380,17 @@ def tab4():
     start_date = st.sidebar.date_input('Start date', datetime.datetime(1945, 1, 1))
     end_date = st.sidebar.date_input('End date', datetime.datetime(2020, 12, 31))
     
-    df = pd.read_csv(r'E:\Investments\Readings\US_Equity_70\data\daily.csv')
+    df = pd.read_csv(data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
     
     df = df[df['DATE'] >= start_date]
     df = df[df['DATE'] <= end_date]
     
 
-    df1 = pd.read_csv(r'E:\Investments\Readings\US_Equity_70\data\monthly.csv')
+    df1 = pd.read_csv(data/monthly.csv')
     df1['DATE'] = pd.to_datetime(df1['DATE']).dt.date
     
-    df3 = pd.read_csv(r'E:\Investments\Readings\US_Equity_70\data\weekly.csv')
+    df3 = pd.read_csv(data/weekly.csv')
     df3['DATE'] = pd.to_datetime(df3['DATE']).dt.date
     
     df1 = df1[df1['DATE'] >= start_date]
