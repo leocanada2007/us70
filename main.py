@@ -64,19 +64,19 @@ def tab1():
                    'PCE_YoY',
                    'Real_GDP_YoY']
     
-    df = pd.read_csv(data/daily.csv')
+    df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
     
-    df1 = pd.read_csv(data/monthly.csv')
+    df1 = pd.read_csv('data/monthly.csv')
     df1['DATE'] = pd.to_datetime(df1['DATE']).dt.date
     
-    df2 = pd.read_csv(data/quarterly.csv')
+    df2 = pd.read_csv('data/quarterly.csv')
     df2['DATE'] = pd.to_datetime(df2['DATE']).dt.date
     
-    df3 = pd.read_csv(data/weekly.csv')
+    df3 = pd.read_csv('data/weekly.csv')
     df3['DATE'] = pd.to_datetime(df3['DATE']).dt.date
     
-    df_events = pd.read_excel(data/events.xlsx')
+    df_events = pd.read_excel('data/events.xlsx')
     df_events['start'] = pd.to_datetime(df_events['start']).dt.date
     df_events['end'] = pd.to_datetime(df_events['end']).dt.date
     
