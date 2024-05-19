@@ -76,7 +76,7 @@ def tab1():
     df3 = pd.read_csv('data/weekly.csv')
     df3['DATE'] = pd.to_datetime(df3['DATE']).dt.date
     
-    df_events = pd.read_excel('data/events.xlsx')
+    df_events = pd.read_csv('data/events.csv')
     df_events['start'] = pd.to_datetime(df_events['start']).dt.date
     df_events['end'] = pd.to_datetime(df_events['end']).dt.date
     
