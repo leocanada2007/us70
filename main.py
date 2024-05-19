@@ -380,7 +380,7 @@ def tab4():
     start_date = st.sidebar.date_input('Start date', datetime.datetime(1945, 1, 1))
     end_date = st.sidebar.date_input('End date', datetime.datetime(2020, 12, 31))
     
-    df = pd.read_csv'data/daily.csv')
+    df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
     
     df = df[df['DATE'] >= start_date]
