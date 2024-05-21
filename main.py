@@ -530,6 +530,80 @@ def tab4():
     
 
     
+#==============================================================================
+# Tab 5 Trends
+#==============================================================================
+
+def tab5():
+    
+    analysis_year = st.sidebar.number_input('Year', 1948)
+    
+    df = pd.read_csv('data\DJI.csv')
+    
+    df['year'] = pd.to_datetime(df['Date']).dt.year
+    
+    df['Date'] = pd.to_datetime(df['Date'])
+    df['DJI'] = df['DJI'].astype(float)
+    
+    df['atr'] = ta.atr(high = df['DJI'], low = df['DJI'], close = df['DJI'])
+    df['atr'] = df.atr.rolling(window = 30).mean()
+    
+    df = df[df['Date'] >= '1948-01-01']
+    df = df[df['Date'] <= '2018-12-31']
+    df.set_index('Date', inplace = True)
+    
+    df_temp = df[df.year == analysis_year]
+    
+    fig, ax = plt.subplots()
+    plt.xticks(rotation = -30)
+    price, = ax.plot(df_temp.index, df_temp.DJI, c='grey', lw = 2, alpha=0.5, zorder = 5)
+    
+    df_temp['smoothed'] = savgol_filter(df_temp.DJI, 60, 5)
+    fig, ax = plt.subplots()
+    plt.xticks(rotation = -30)
+    price, = ax.plot(df_temp.index, df_temp.DJI, c='grey', lw = 2, alpha=0.5, zorder = 5) 
+    price_smooth, = ax.plot(df_temp.index, df_temp.smoothed, c='b', lw = 2, zorder = 5) 
+    
+    
+    atr = df_temp.atr.iloc[-1]
+    
+    peaks_idx, _ = find_peaks(df_temp.smoothed, distance = 15, width = 3, prominence = atr)
+    
+    troughs_idx, _ = find_peaks(-1*df_temp.smoothed, distance = 15, width = 3, prominence = atr)
+    
+    peaks, = ax.plot(df_temp.index[peaks_idx], df_temp.smoothed.iloc[peaks_idx], \
+                     c = 'r', linestyle = 'None', markersize = 10, marker = 'o', zorder = 10)
+    
+    troughs, = ax.plot(df_temp.index[troughs_idx], df_temp.smoothed.iloc[troughs_idx], \
+                     c = 'g', linestyle = 'None', markersize = 10, marker = 'o', zorder = 10)
+        
+    ax.set_ylabel('DJI')    
+    ax.set_title(analysis_year)  
+    
+   
+    df_peak = pd.DataFrame(df_temp.smoothed.iloc[peaks_idx])
+    df_peak['type'] = 'peak'
+    df_trough = pd.DataFrame(df_temp.smoothed.iloc[troughs_idx])
+    df_trough['type'] = 'trough'
+    
+    tp = pd.concat([df_peak, df_trough])
+    
+    tp = tp.sort_index()
+    
+    
+    
+    
+    
+    # Display
+    
+    
+    
+    st.title('区间划分')
+    st.pyplot(fig)
+    
+    st.title('拐点')
+    st.table(tp)
+    
     
     
     
@@ -542,19 +616,10 @@ def tab4():
 
 def run():
     
-    # Add the ticker selection on the sidebar
-    # Get the list of stock tickers from S&P500
-    # ticker_list = ['AGG', 'PSI', 'SGOV', 'SPHY', 'VTHR']
-    
-# =============================================================================
-#     # Add selection box
-#     global ticker
-#     ticker = st.sidebar.selectbox("Select a ticker", ticker_list)
-# =============================================================================
     
     
     # Add a radio box
-    select_tab = st.sidebar.radio("Select tab", ['概览', '指数', '宏观', '资本市场'])
+    select_tab = st.sidebar.radio("Select tab", ['概览', '指数', '宏观', '资本市场','区间划分'])
 
     # Show the selected tab
     if select_tab == '概览':
@@ -564,7 +629,9 @@ def run():
     elif select_tab == '宏观':
         tab3()
     elif select_tab == '资本市场':
-        tab4()      
+        tab4()  
+    elif select_tab == '区间划分':
+        tab5()    
         
 if __name__ == "__main__":
     run()   
