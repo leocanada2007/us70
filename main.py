@@ -83,8 +83,8 @@ def tab1():
     df_events['start'] = pd.to_datetime(df_events['start']).dt.date
     df_events['end'] = pd.to_datetime(df_events['end']).dt.date
     
-    start_date = st.sidebar.date_input('Start date', datetime.datetime(1945, 1, 1))
-    end_date = st.sidebar.date_input('End date', datetime.datetime(2020, 12, 31))
+    start_date = st.sidebar.date_input('Start date', datetime.datetime(1948, 1, 1))
+    end_date = st.sidebar.date_input('End date', datetime.datetime(1949, 1, 1))
 
     df = df[df['DATE'] >= start_date]
     df = df[df['DATE'] <= end_date]
@@ -269,8 +269,8 @@ def tab2():
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
     
-    start_date = st.sidebar.date_input('Start date', datetime.datetime(1945, 1, 1))
-    end_date = st.sidebar.date_input('End date', datetime.datetime(2020, 12, 31))
+    start_date = st.sidebar.date_input('Start date', datetime.datetime(1948, 1, 1))
+    end_date = st.sidebar.date_input('End date', datetime.datetime(1949, 1, 1))
 
     df = df[df['DATE'] >= start_date]
     df = df[df['DATE'] <= end_date]
@@ -330,8 +330,8 @@ def tab3():
                      'Nominal_GDP_YoY', 
                      'Real_GDP_YoY']
     
-    start_date = st.sidebar.date_input('Start date', datetime.datetime(1945, 1, 1))
-    end_date = st.sidebar.date_input('End date', datetime.datetime(2020, 12, 31))
+    start_date = st.sidebar.date_input('Start date', datetime.datetime(1948, 1, 1))
+    end_date = st.sidebar.date_input('End date', datetime.datetime(1949, 1, 1))
     
     # Import Data
     
@@ -449,8 +449,8 @@ def tab3():
 
 def tab4():
     
-    start_date = st.sidebar.date_input('Start date', datetime.datetime(1945, 1, 1))
-    end_date = st.sidebar.date_input('End date', datetime.datetime(2020, 12, 31))
+    start_date = st.sidebar.date_input('Start date', datetime.datetime(1948, 1, 1))
+    end_date = st.sidebar.date_input('End date', datetime.datetime(1949, 1, 1))
     
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
