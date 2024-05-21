@@ -101,28 +101,50 @@ def tab1():
     
     delta = pd.DataFrame([])
     
+    std = pd.DataFrame([])
+    
     for c in range(2,len(df.columns)):
         
         ds = pd.DataFrame([[df.columns[c], df.iloc[-1,c] - df.iloc[0,c]]])
+        var = pd.DataFrame([[df.columns[c], df.iloc[:,c].std()]])
         delta = pd.concat([delta, ds])
+        std = pd.concat([std, var])
         
     for c in range(2,len(df1.columns)):
         
-        ds = pd.DataFrame([[df1.columns[c], df1.iloc[-1,c] - df1.iloc[0,c]]])
-        delta = pd.concat([delta, ds])
-
+        try:
+            ds = pd.DataFrame([[df1.columns[c], df1.iloc[-1,c] - df1.iloc[0,c]]])
+            var = pd.DataFrame([[df1.columns[c], df1.iloc[:,c].std()]])
+            delta = pd.concat([delta, ds])
+            std = pd.concat([std, var])
+        except:
+            pass
+        
     for c in range(2,len(df2.columns)):
         
-        ds = pd.DataFrame([[df2.columns[c], df2.iloc[-1,c] - df2.iloc[0,c]]])
-        delta = pd.concat([delta, ds])
+        try:
+            ds = pd.DataFrame([[df2.columns[c], df2.iloc[-1,c] - df2.iloc[0,c]]])
+            delta = pd.concat([delta, ds])
+            var = pd.DataFrame([[df2.columns[c], df2.iloc[:,c].std()]])
+            std = pd.concat([std, var])
+        except:
+            pass
 
     for c in range(2,len(df3.columns)):
         
-        ds = pd.DataFrame([[df3.columns[c], df3.iloc[-1,c] - df3.iloc[0,c]]])
-        delta = pd.concat([delta, ds]) 
+        try:
+            ds = pd.DataFrame([[df3.columns[c], df3.iloc[-1,c] - df3.iloc[0,c]]])
+            delta = pd.concat([delta, ds]) 
+            var = pd.DataFrame([[df3.columns[c], df3.iloc[:,c].std()]])
+            std = pd.concat([std, var])
+        except:
+            pass
         
-    delta.columns = ['index', 'Growth']
+    delta.columns = ['index', 'value']
+    std.columns = ['index', 'value']
     delta = delta[delta['index'].isin(diff_columns)]
+    std = std[std['index'].isin(cols)]
+
         
     pct = pd.DataFrame([])
     
@@ -133,32 +155,59 @@ def tab1():
         
     for c in range(2,len(df1.columns)):
         
-        ds = pd.DataFrame([[df1.columns[c], 100*(df1.iloc[-1,c] - df1.iloc[0,c])/df1.iloc[0,c]]])
-        pct = pd.concat([pct, ds])
+        try:
+            ds = pd.DataFrame([[df1.columns[c], 100*(df1.iloc[-1,c] - df1.iloc[0,c])/df1.iloc[0,c]]])
+            pct = pd.concat([pct, ds])
+        except:
+            pass
 
     for c in range(2,len(df2.columns)):
         
-        ds = pd.DataFrame([[df2.columns[c], 100*(df2.iloc[-1,c] - df2.iloc[0,c])/df2.iloc[0,c]]])
-        pct = pd.concat([pct, ds])
-
+        try:
+            ds = pd.DataFrame([[df2.columns[c], 100*(df2.iloc[-1,c] - df2.iloc[0,c])/df2.iloc[0,c]]])
+            pct = pd.concat([pct, ds])
+        except:
+            pass
+        
     for c in range(2,len(df3.columns)):
         
-        ds = pd.DataFrame([[df3.columns[c], 100*(df3.iloc[-1,c] - df3.iloc[0,c])/df3.iloc[0,c]]])
-        pct = pd.concat([pct, ds])  
+        try:
+            ds = pd.DataFrame([[df3.columns[c], 100*(df3.iloc[-1,c] - df3.iloc[0,c])/df3.iloc[0,c]]])
+            pct = pd.concat([pct, ds])  
+        except:
+            pass
         
-    pct.columns = ['index', 'Growth']
+    pct.columns = ['index', 'value']
     pct = pct[pct['index'].isin(pct_columns)]
         
  
     change = pd.concat([pct, delta])
-    change['color'] = np.where(change["Growth"]<0, 'red', 'green')
-    # change.plot(x = 'index', y = 'Growth', kind='bar', title="Summary", color=change.positive.map({True: 'g', False: 'r'}), legend = False)
+
+    
+    change['stats'] = 'Delta'
+    std['stats'] = 'STD'
+    
+    change = pd.concat([change, std])
+    
+    change['color'] = np.where(change["value"]<0, 'down', 'up')
+    
+    change.columns = ['Indicator', 'Value', 'Stats', 'color']
+    
+
+    
     fig_summary = px.bar(change,
-                  x="index",
-                  y="Growth",
-                  color = 'color',
-                  color_discrete_map = {"green":"green", "red":"red"})
-    fig_summary.update_layout(showlegend=False)
+                  x="Indicator",
+                  y='Value',
+                  color = 'Stats',
+                  barmode = 'group',
+                  pattern_shape="Stats"
+                  )
+    
+    fig_summary.update_layout(legend_title="Stats", bargap=0.5,bargroupgap=0.1)
+    
+    fig_summary.for_each_trace(
+        lambda trace: trace.update(marker_color=np.where(change.loc[change['Stats'].eq(trace.name), 'Value'] < 0, 'red', 'green'))
+    )
     
     fig_event = px.timeline(df_events.sort_values('start'),
                   x_start="start",
@@ -166,11 +215,25 @@ def tab1():
                   y="event",
                   text="remark",
                   color_discrete_sequence=["tan"])
+    
+    
+    # plotly setup DJI
+    fig_dji = px.line(df, x=df['DATE'], y=['DJI'])
+    fig_dji.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_dji.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_dji = bgLevels(df=df, fig = fig_dji, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
 
 
 
 
     # Display
+
+    
+    
+    
+    
     st.title('概览') 
     st.plotly_chart(fig_summary)
     
@@ -180,9 +243,15 @@ def tab1():
     
     st.title('事件')
     st.plotly_chart(fig_event)
+    
+    
+        
+    st.title('道琼斯指数')
+    st.plotly_chart(fig_dji)
         
 
         
+
 
 
     
