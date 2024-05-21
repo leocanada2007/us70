@@ -54,8 +54,9 @@ def bgLevels(df, fig, variable, level, mode, fillcolor, layer):
 
 def tab1():
     
-    pct_columns = ['DJI', 'SP500', 'SP500PE', 'Gold_reserves_billion']
-    diff_columns= ['Discount_Rate', 
+    pct_columns = ['DJI', 'SP500', 'Gold_reserves_billion']
+    diff_columns= ['SP500PE',
+                   'Discount_Rate', 
                    'Indus_Production_YoY',
                    'CPI_YoY',
                    'Core_CPI_YoY',
@@ -63,6 +64,8 @@ def tab1():
                    'Unemployment_Rate',
                    'PCE_YoY',
                    'Real_GDP_YoY']
+    
+    cols = pct_columns + diff_columns
     
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
