@@ -540,7 +540,7 @@ def tab5():
     
     analysis_year = st.sidebar.number_input('Year', 1948)
     
-    df = pd.read_csv('data\DJI.csv')
+    df = pd.read_csv('data/DJI.csv')
     
     df['year'] = pd.to_datetime(df['Date']).dt.year
     
