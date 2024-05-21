@@ -2,7 +2,9 @@ import streamlit as st, pandas as pd, numpy as np
 import datetime
 import plotly.express as px
 
-
+import pandas_ta as ta
+from scipy.signal import savgol_filter
+from scipy.signal import find_peaks
 
 #==============================================================================
 # Background Color Function
