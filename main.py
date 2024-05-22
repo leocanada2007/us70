@@ -56,16 +56,17 @@ def bgLevels(df, fig, variable, level, mode, fillcolor, layer):
 
 def tab1():
     
-    pct_columns = ['DJI', 'SP500', 'Gold_reserves_billion']
+    pct_columns = ['DJI', 'SP500']
     diff_columns= ['SP500PE',
                    'Discount_Rate', 
                    'Indus_Production_YoY',
                    'CPI_YoY',
-                   'Core_CPI_YoY',
                    'PPI_YoY',
                    'Unemployment_Rate',
                    'PCE_YoY',
-                   'Real_GDP_YoY']
+                   'Real_GDP_YoY',
+                   'TB3MS',
+                   'DGS10']
     
     cols = pct_columns + diff_columns
     
@@ -509,6 +510,15 @@ def tab4():
     
     fig_gold = bgLevels(df=df1, fig = fig_gold, variable = 'Recession', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+
+    # plotly setup 3 Month Year Treasury
+    fig_3m = px.line(df1, x=df1['DATE'], y=['TB3MS'])
+    fig_3m.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_3m.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_3m = bgLevels(df=df1, fig = fig_3m, variable = 'Recession', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
     
@@ -518,8 +528,12 @@ def tab4():
     
     
     
+    
     st.title('美联储贴现利率')
     st.plotly_chart(fid_discount_rate)
+    
+    st.title('3个月国债收益')
+    st.plotly_chart(fig_3m)
     
     st.title('10年期国债收益')
     st.plotly_chart(fig_10y)
@@ -529,6 +543,7 @@ def tab4():
     
     st.title('标普500市盈率')
     st.plotly_chart(fig_pe)
+    
     
 
     
