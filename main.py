@@ -485,7 +485,7 @@ def tab4():
     
     
     # plotly setup 10 Year Treasury
-    fig_10y = px.line(df, x=df['DATE'], y=['DGS10'])
+    fig_10y = px.line(df, x=df['DATE'], y=['DGS10', 'TB3MS'])
     fig_10y.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     fig_10y.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     
