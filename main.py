@@ -513,11 +513,11 @@ def tab4():
 
 
     # plotly setup 3 Month Year Treasury
-    fig_3m = px.line(df1, x=df1['DATE'], y=['TB3MS'])
+    fig_3m = px.line(df, x=df['DATE'], y=['DTB3'])
     fig_3m.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     fig_3m.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     
-    fig_3m = bgLevels(df=df1, fig = fig_3m, variable = 'Recession', level = 0.5, mode = 'above',
+    fig_3m = bgLevels(df=df, fig = fig_3m, variable = 'Recession', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
