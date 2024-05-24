@@ -65,7 +65,7 @@ def tab1():
                    'Unemployment_Rate',
                    'PCE_YoY',
                    'Real_GDP_YoY',
-                   'TB3MS',
+                   'DTB3',
                    'DGS10']
     
     cols = pct_columns + diff_columns
