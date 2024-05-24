@@ -517,7 +517,7 @@ def tab4():
     fig_3m.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     fig_3m.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     
-    fig_3m = bgLevels(df=df, fig = fig_3m, variable = 'Recession', level = 0.5, mode = 'above',
+    fig_3m = bgLevels(df=df, fig = fig_3m, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
