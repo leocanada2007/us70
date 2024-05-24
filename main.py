@@ -532,11 +532,8 @@ def tab4():
     st.title('美联储贴现利率')
     st.plotly_chart(fid_discount_rate)
     
-    st.title('3个月国债收益')
+    st.title('长(10Y)短(3M)期国债收益')
     st.plotly_chart(fig_3m)
-    
-    st.title('10年期国债收益')
-    st.plotly_chart(fig_10y)
     
     st.title('黄金储备（十亿）')
     st.plotly_chart(fig_gold)
