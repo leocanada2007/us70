@@ -56,7 +56,7 @@ def bgLevels(df, fig, variable, level, mode, fillcolor, layer):
 
 def tab1():
     
-    pct_columns = ['DJI', 'SP500']
+    pct_columns = ['DJI', 'SP500', 'WTI']
     diff_columns= ['SP500PE',
                    'Discount_Rate', 
                    'Indus_Production_YoY',
@@ -519,6 +519,15 @@ def tab4():
     
     fig_3m = bgLevels(df=df, fig = fig_3m, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+
+    # plotly setup WTI
+    fig_wti = px.line(df, x=df['DATE'], y=['WTI'])
+    fig_wti.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_wti.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_wti = bgLevels(df=df, fig = fig_wti, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
     
@@ -535,11 +544,16 @@ def tab4():
     st.title('长(10Y)短(3M)期国债收益')
     st.plotly_chart(fig_3m)
     
+    st.title('WTI原油价格')
+    st.plotly_chart(fig_wti)
+
+    st.title('标普500市盈率')
+    st.plotly_chart(fig_pe)
+    
     st.title('黄金储备（十亿）')
     st.plotly_chart(fig_gold)
     
-    st.title('标普500市盈率')
-    st.plotly_chart(fig_pe)
+
     
     
 
