@@ -482,6 +482,14 @@ def tab4():
     
     fid_discount_rate = bgLevels(df=df1, fig = fid_discount_rate, variable = 'Recession', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+    # plotly setup Federal Fund rate
+    fid_ff_rate = px.line(df, x=df['DATE'], y=['DFF'])
+    fid_ff_rate.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fid_ff_rate.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fid_ff_rate = bgLevels(df=df1, fig = fid_discount_rate, variable = 'Recession', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
     # plotly setup 10 Year Treasury
@@ -538,7 +546,7 @@ def tab4():
     
     
     
-    st.title('美联储贴现利率')
+    st.title('美联储贴现利率 (Discount Rate)')
     st.plotly_chart(fid_discount_rate)
     
     st.title('长(10Y)短(3M)期国债收益')
