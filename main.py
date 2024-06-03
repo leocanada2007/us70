@@ -548,6 +548,9 @@ def tab4():
     
     st.title('美联储贴现利率 (Discount Rate)')
     st.plotly_chart(fid_discount_rate)
+
+    st.title('联邦基金利率 (Federal Fund Rate)')
+    st.plotly_chart(fid_ff_rate)
     
     st.title('长(10Y)短(3M)期国债收益')
     st.plotly_chart(fig_3m)
