@@ -671,7 +671,7 @@ def tab5():
 
 def tab6():
     
-    analysis_year = st.sidebar.number_input('Year', 1948)
+    analysis_year = st.sidebar.number_input('Year', 1971)
     
     df = pd.read_csv('data/IXIC.csv')
     
