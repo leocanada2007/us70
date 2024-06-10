@@ -683,7 +683,7 @@ def tab6():
     df['atr'] = ta.atr(high = df['IXIC'], low = df['IXIC'], close = df['IXIC'])
     df['atr'] = df.atr.rolling(window = 30).mean()
     
-    df = df[df['Date'] >= '1948-01-01']
+    df = df[df['Date'] >= '1971-02-05']
     df = df[df['Date'] <= '2018-12-31']
     df.set_index('Date', inplace = True)
     
