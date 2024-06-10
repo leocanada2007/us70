@@ -419,7 +419,7 @@ def tab3():
     fig_cp.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     fig_cp.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     
-    fig_cp = bgLevels(df=df1, fig = fig_gdp, variable = 'Recession', level = 0.5, mode = 'above',
+    fig_cp = bgLevels(df=df1, fig = fig_cp, variable = 'Recession', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')   
     
 
