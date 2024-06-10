@@ -325,6 +325,9 @@ def tab2():
 
     # Display
 
+    st.title('事件')
+    st.plotly_chart(fig_event)    
+
     st.title('道琼斯')
     st.plotly_chart(fig_dji)
 
@@ -334,8 +337,6 @@ def tab2():
     st.title('标普500')
     st.plotly_chart(fig_spx)   
 
-    st.title('事件')
-    st.plotly_chart(fig_event)
         
 
         
