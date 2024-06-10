@@ -271,12 +271,19 @@ def tab2():
     
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
+
+    df_events = pd.read_csv('data/events.csv')
+    df_events['start'] = pd.to_datetime(df_events['start']).dt.date
+    df_events['end'] = pd.to_datetime(df_events['end']).dt.date    
     
     start_date = st.sidebar.date_input('Start date', datetime.datetime(1948, 1, 1))
     end_date = st.sidebar.date_input('End date', datetime.datetime(1949, 1, 1))
 
     df = df[df['DATE'] >= start_date]
     df = df[df['DATE'] <= end_date]
+
+    df_events = df_events[df_events['end'] >= start_date]
+    df_events = df_events[df_events['start'] <= end_date]    
     
     # plotly setup DJI
     fig_dji = px.line(df, x=df['DATE'], y=['DJI'])
@@ -286,6 +293,15 @@ def tab2():
     fig_dji = bgLevels(df=df, fig = fig_dji, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
 
+
+    # plotly setup Nasdaq
+    fig_ixic = px.line(df, x=df['DATE'], y=['IXIC'])
+    fig_ixic.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_ixic.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_ixic = bgLevels(df=df, fig = fig_ixic, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
     # plotly setup SP500
     fig_spx = px.line(df, x=df['DATE'], y=['SP500'])
     fig_spx.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
@@ -293,6 +309,13 @@ def tab2():
     
     fig_spx = bgLevels(df=df, fig = fig_spx, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+    fig_event = px.timeline(df_events.sort_values('start'),
+                  x_start="start",
+                  x_end="end",
+                  y="event",
+                  text="remark",
+                  color_discrete_sequence=["tan"])    
     
 
 
@@ -304,7 +327,10 @@ def tab2():
 
     st.title('道琼斯')
     st.plotly_chart(fig_dji)
-        
+
+    st.title('纳斯达克')
+    st.plotly_chart(fig_ixic)
+    
     st.title('标普500')
     st.plotly_chart(fig_spx)        
         
@@ -824,12 +850,12 @@ def run():
     
     
     # Add a radio box
-    select_tab = st.sidebar.radio("Select tab", ['概览', '指数', '宏观', '其它','道琼斯区间划分','纳斯达克区间划分','SP500区间划分'])
+    select_tab = st.sidebar.radio("Select tab", ['事件', '宏观', '其它','道琼斯区间划分','纳斯达克区间划分','SP500区间划分'])
 
     # Show the selected tab
     if select_tab == '概览':
         tab1()
-    elif select_tab == '指数':
+    elif select_tab == '事件':
         tab2()
     elif select_tab == '宏观':
         tab3()
