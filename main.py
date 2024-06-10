@@ -451,10 +451,10 @@ def tab3():
     st.title('工业生产指数同比')
     st.plotly_chart(fig_ind)
 
-    st.title('企业盈利')
+    st.title('企业盈利环比')
     st.plotly_chart(fig_cp)
     
-    st.title('零售品总额')
+    st.title('零售品总额环比')
     st.plotly_chart(fig_rs)
     
     st.title('均值')
