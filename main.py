@@ -503,7 +503,7 @@ def tab4():
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
 
     # plotly setup Federal Fund rate
-    fid_ff_rate = px.line(df, x=df['DATE'], y=['DFF'])
+    fid_ff_rate = px.line(df, x=df['DATE'], y=['DFEDTARL', 'DFEDTARU'])
     fid_ff_rate.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     fid_ff_rate.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     
