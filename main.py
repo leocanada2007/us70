@@ -678,9 +678,9 @@ def tab6():
     df['year'] = pd.to_datetime(df['Date']).dt.year
     
     df['Date'] = pd.to_datetime(df['Date'])
-    df['DJI'] = df['DJI'].astype(float)
+    df['IXIC'] = df['IXIC'].astype(float)
     
-    df['atr'] = ta.atr(high = df['DJI'], low = df['DJI'], close = df['DJI'])
+    df['atr'] = ta.atr(high = df['IXIC'], low = df['IXIC'], close = df['IXIC'])
     df['atr'] = df.atr.rolling(window = 30).mean()
     
     df = df[df['Date'] >= '1948-01-01']
@@ -691,12 +691,12 @@ def tab6():
     
     fig, ax = plt.subplots()
     plt.xticks(rotation = -30)
-    price, = ax.plot(df_temp.index, df_temp.DJI, c='grey', lw = 2, alpha=0.5, zorder = 5)
+    price, = ax.plot(df_temp.index, df_temp.IXIC, c='grey', lw = 2, alpha=0.5, zorder = 5)
     
-    df_temp['smoothed'] = savgol_filter(df_temp.DJI, 60, 5)
+    df_temp['smoothed'] = savgol_filter(df_temp.IXIC, 60, 5)
     fig, ax = plt.subplots()
     plt.xticks(rotation = -30)
-    price, = ax.plot(df_temp.index, df_temp.DJI, c='grey', lw = 2, alpha=0.5, zorder = 5) 
+    price, = ax.plot(df_temp.index, df_temp.IXIC, c='grey', lw = 2, alpha=0.5, zorder = 5) 
     price_smooth, = ax.plot(df_temp.index, df_temp.smoothed, c='b', lw = 2, zorder = 5) 
     
     
@@ -712,7 +712,7 @@ def tab6():
     troughs, = ax.plot(df_temp.index[troughs_idx], df_temp.smoothed.iloc[troughs_idx], \
                      c = 'g', linestyle = 'None', markersize = 10, marker = 'o', zorder = 10)
         
-    ax.set_ylabel('DJI')    
+    ax.set_ylabel('IXIC')    
     ax.set_title(analysis_year)  
     
    
@@ -752,9 +752,9 @@ def tab7():
     df['year'] = pd.to_datetime(df['Date']).dt.year
     
     df['Date'] = pd.to_datetime(df['Date'])
-    df['DJI'] = df['DJI'].astype(float)
+    df['SP500'] = df['SP500'].astype(float)
     
-    df['atr'] = ta.atr(high = df['DJI'], low = df['DJI'], close = df['DJI'])
+    df['atr'] = ta.atr(high = df['SP500'], low = df['SP500'], close = df['SP500'])
     df['atr'] = df.atr.rolling(window = 30).mean()
     
     df = df[df['Date'] >= '1948-01-01']
@@ -765,12 +765,12 @@ def tab7():
     
     fig, ax = plt.subplots()
     plt.xticks(rotation = -30)
-    price, = ax.plot(df_temp.index, df_temp.DJI, c='grey', lw = 2, alpha=0.5, zorder = 5)
+    price, = ax.plot(df_temp.index, df_temp.SP500, c='grey', lw = 2, alpha=0.5, zorder = 5)
     
-    df_temp['smoothed'] = savgol_filter(df_temp.DJI, 60, 5)
+    df_temp['smoothed'] = savgol_filter(df_temp.SP500, 60, 5)
     fig, ax = plt.subplots()
     plt.xticks(rotation = -30)
-    price, = ax.plot(df_temp.index, df_temp.DJI, c='grey', lw = 2, alpha=0.5, zorder = 5) 
+    price, = ax.plot(df_temp.index, df_temp.SP500, c='grey', lw = 2, alpha=0.5, zorder = 5) 
     price_smooth, = ax.plot(df_temp.index, df_temp.smoothed, c='b', lw = 2, zorder = 5) 
     
     
@@ -786,7 +786,7 @@ def tab7():
     troughs, = ax.plot(df_temp.index[troughs_idx], df_temp.smoothed.iloc[troughs_idx], \
                      c = 'g', linestyle = 'None', markersize = 10, marker = 'o', zorder = 10)
         
-    ax.set_ylabel('DJI')    
+    ax.set_ylabel('SP500')    
     ax.set_title(analysis_year)  
     
    
