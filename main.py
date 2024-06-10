@@ -422,7 +422,13 @@ def tab3():
     fig_cp = bgLevels(df=df1, fig = fig_cp, variable = 'Recession', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')   
     
-
+    # plotly setup Retail Sales
+    fig_rs = px.line(df1, x=df1['DATE'], y=['RSAFS_MoM'])
+    fig_rs.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_rs.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_rs = bgLevels(df=df1, fig = fig_rs, variable = 'Recession', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
     
@@ -447,7 +453,9 @@ def tab3():
 
     st.title('企业盈利')
     st.plotly_chart(fig_cp)
-
+    
+    st.title('零售品总额')
+    st.plotly_chart(fig_rs)
     
     st.title('均值')
     st.table(df_mean)
