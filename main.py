@@ -201,7 +201,7 @@ def tab1():
     
     fig_summary = px.bar(change,
                   x="Indicator",
-                  y='Value'
+                  y='Value',
                   color = 'color',
                   # barmode = 'group',
                   # pattern_shape="Stats"
