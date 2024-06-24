@@ -854,7 +854,7 @@ def run():
     
     
     # Add a radio box
-    select_tab = st.sidebar.radio("Select tab", ['事件', '宏观', '其它','道琼斯区间划分','纳斯达克区间划分','SP500区间划分'])
+    select_tab = st.sidebar.radio("Select tab", ['概览', '事件', '宏观', '其它','道琼斯区间划分','纳斯达克区间划分','SP500区间划分'])
 
     # Show the selected tab
     if select_tab == '概览':
