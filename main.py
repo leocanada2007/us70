@@ -56,14 +56,12 @@ def bgLevels(df, fig, variable, level, mode, fillcolor, layer):
 
 def tab1():
     
-    pct_columns = ['DJI', 'SP500', 'WTI']
+    pct_columns = ['DJI', 'SP500']
     diff_columns= ['SP500PE',
                    'Discount_Rate', 
                    'Indus_Production_YoY',
                    'CPI_YoY',
-                   'PPI_YoY',
                    'Unemployment_Rate',
-                   'PCE_YoY',
                    'Real_GDP_YoY',
                    'DTB3',
                    'DGS10']
@@ -211,9 +209,7 @@ def tab1():
     
     fig_summary.update_layout(legend_title="Stats", bargap=0.5,bargroupgap=0.1)
     
-    fig_summary.for_each_trace(
-        lambda trace: trace.update(marker_color=np.where(change.loc[change['Stats'].eq(trace.name), 'Value'] < 0, 'red', 'green'))
-    )
+
     
     fig_event = px.timeline(df_events.sort_values('start'),
                   x_start="start",
