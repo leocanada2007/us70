@@ -209,7 +209,7 @@ def tab1():
     
     # fig_summary.update_layout(legend_title="Stats", bargap=0.5,bargroupgap=0.1)
 
-    fig_summary.update_traces(change['color'])
+    # fig_summary.update_traces(change['color'])
     
     # fig_summary.for_each_trace(
     #     lambda trace: trace.update(marker_color=np.where(change.loc[change['Stats'].eq(trace.name), 'Value'] < 0, 'red', 'green'))
