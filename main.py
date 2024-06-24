@@ -191,7 +191,7 @@ def tab1():
     change['stats'] = 'Delta'
     std['stats'] = 'STD'
     
-    change = pd.concat([change, std])
+    # change = pd.concat([change, std])
     
     change['color'] = np.where(change["value"]<0, 'down', 'up')
     
@@ -202,12 +202,12 @@ def tab1():
     fig_summary = px.bar(change,
                   x="Indicator",
                   y='Value',
-                  color = 'Stats',
+                  # color = 'Stats',
                   barmode = 'group',
-                  pattern_shape="Stats"
+                  # pattern_shape="Stats"
                   )
     
-    fig_summary.update_layout(legend_title="Stats", bargap=0.5,bargroupgap=0.1)
+    # fig_summary.update_layout(legend_title="Stats", bargap=0.5,bargroupgap=0.1)
     
     fig_summary.for_each_trace(
         lambda trace: trace.update(marker_color=np.where(change.loc[change['Stats'].eq(trace.name), 'Value'] < 0, 'red', 'green'))
