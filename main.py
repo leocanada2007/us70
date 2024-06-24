@@ -193,7 +193,7 @@ def tab1():
     
     # change = pd.concat([change, std])
     
-    change['color'] = np.where(change["value"]<0, 'down', 'up')
+    change['color'] = np.where(change["value"]<0, 'red', 'green')
     
     change.columns = ['Indicator', 'Value', 'Stats', 'color']
     
