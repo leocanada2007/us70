@@ -2,3 +2,4 @@ plotly
 scipy
 pandas-ta
 matplotlib
+numpy == 1.26.4
