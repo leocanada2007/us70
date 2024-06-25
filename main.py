@@ -228,7 +228,7 @@ def tab1():
     df2.plot(x = 'DATE', y = ['CP_QoQ'], title='Corporate Profit, QoQ')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
     plt.xticks(rotation=45)
-    plt.title("Industrial Production, YoY", fontsize = 24)
+    plt.title("Corporate Profit, QoQ", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
     with col10:
@@ -237,7 +237,7 @@ def tab1():
     df1.plot(x = 'DATE', y = ['RSAFS_MoM'], title='Retail Sales, MoM')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
     plt.xticks(rotation=45)
-    plt.title("Industrial Production, YoY", fontsize = 24)
+    plt.title("Retail Sales, MoM", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
     with col11:
