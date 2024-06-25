@@ -233,7 +233,7 @@ def tab1():
         st.pyplot(fig=plt)  
 
     if start_year >= datetime.date(1969, 1, 1) and start_year <= datetime.date(1987, 12, 31):
-        df1.plot(x = 'DATE', y = ['WTI'], title='WTI Price')
+        df.plot(x = 'DATE', y = ['WTI'], title='WTI Price')
         plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
         plt.xticks(rotation=45)
         plt.title("WTI Price", fontsize = 24)
