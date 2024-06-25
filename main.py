@@ -131,7 +131,7 @@ def tab1():
     plt.xticks(rotation=45)
     plt.title("SP500", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
-    plt.fill_between(df['DATE], where = df['USRECDM'] == 1, alpha=0.3, interpolate=True)    
+    plt.fill_between(df['DATE], 15, where = df['USRECDM'] == 1, alpha=0.3, interpolate=True)    
 
     
     
