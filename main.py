@@ -279,12 +279,6 @@ def tab2():
     fig_spx = bgLevels(df=df, fig = fig_spx, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
 
-    fig_event = px.timeline(df_events.sort_values('start'),
-                  x_start="start",
-                  x_end="end",
-                  y="event",
-                  text="remark",
-                  color_discrete_sequence=["tan"])    
     
 
 
@@ -292,10 +286,7 @@ def tab2():
 
 
 
-    # Display
-
-    st.title('事件')
-    st.plotly_chart(fig_event)    
+    # Display   
 
     st.title('道琼斯')
     st.plotly_chart(fig_dji)
@@ -823,12 +814,12 @@ def run():
     
     
     # Add a radio box
-    select_tab = st.sidebar.radio("Select tab", ['概览', '事件', '宏观', '其它','道琼斯区间划分','纳斯达克区间划分','SP500区间划分'])
+    select_tab = st.sidebar.radio("Select tab", ['概览', '指数', '宏观', '其它','道琼斯区间划分','纳斯达克区间划分','SP500区间划分'])
 
     # Show the selected tab
     if select_tab == '概览':
         tab1()
-    elif select_tab == '事件':
+    elif select_tab == '指数':
         tab2()
     elif select_tab == '宏观':
         tab3()
