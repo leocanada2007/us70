@@ -131,6 +131,8 @@ def tab1():
     plt.xticks(rotation=45)
     plt.title("SP500", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
+    plt.fill_between(df['DATE], where = df[''USRECDM''] == 1, color='blue', alpha=0.3,
+                 interpolate=True)    
 
     
     
@@ -142,6 +144,7 @@ def tab1():
     plt.xticks(rotation=45)
     plt.title("SP500PE", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
+
     
     with col2:
         st.pyplot(fig=plt)  
