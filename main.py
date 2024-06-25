@@ -126,15 +126,17 @@ def tab1():
     
     # Market Plots
     
-    df.plot(x = 'DATE', y = 'SP500')
-    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
-    plt.xticks(rotation=45)
-    plt.title("SP500", fontsize = 24)
-    plt.tick_params(axis='both', which='major', labelsize=16)
+    fig_spx = df.plot(x = 'DATE', y = 'SP500')
+    fig_spx.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    fig_spx.xticks(rotation=45)
+    fig_spx.title("SP500", fontsize = 24)
+    fig_spx.tick_params(axis='both', which='major', labelsize=16)
+    fig_spx = bgLevels(df=df, fig = fig_spx, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
     with col1:
-        st.pyplot(fig=plt)
+        st.pyplot(fig=fig_spx)
         
     df1.plot(x = 'DATE', y = 'SP500PE', title='SP500PE')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
