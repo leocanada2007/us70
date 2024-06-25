@@ -447,8 +447,8 @@ def tab3():
     st.title('零售品总额环比')
     st.plotly_chart(fig_rs)
     
-    st.title('均值')
-    st.table(df_mean)
+    # st.title('均值')
+    # st.table(df_mean)
 
 
 
