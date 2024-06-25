@@ -56,9 +56,6 @@ def bgLevels(df, fig, variable, level, mode, fillcolor, layer):
 
 def tab1():
     
-
-    
-
     
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
@@ -132,9 +129,6 @@ def tab1():
     plt.xticks(rotation=45)
     plt.title("SP500", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
-
-
-    
     
     with col1:
         st.pyplot(fig=plt)
