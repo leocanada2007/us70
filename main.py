@@ -56,17 +56,9 @@ def bgLevels(df, fig, variable, level, mode, fillcolor, layer):
 
 def tab1():
     
-    pct_columns = ['DJI', 'SP500']
-    diff_columns= ['SP500PE',
-                   'Discount_Rate', 
-                   'Indus_Production_YoY',
-                   'CPI_YoY',
-                   'Unemployment_Rate',
-                   'Real_GDP_YoY',
-                   'DTB3',
-                   'DGS10']
+
     
-    cols = pct_columns + diff_columns
+
     
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
@@ -83,180 +75,157 @@ def tab1():
     df_events = pd.read_csv('data/events.csv')
     df_events['start'] = pd.to_datetime(df_events['start']).dt.date
     df_events['end'] = pd.to_datetime(df_events['end']).dt.date
-    
-    start_date = st.sidebar.date_input('Start date', datetime.datetime(1948, 1, 1))
-    end_date = st.sidebar.date_input('End date', datetime.datetime(1949, 1, 1))
 
-    df = df[df['DATE'] >= start_date]
-    df = df[df['DATE'] <= end_date]
+    intervals = pd.read_csv(r'data/intervals.csv')
+    intervals['Start'] = pd.to_datetime(intervals['Start']).dt.date
+    intervals['End'] = pd.to_datetime(intervals['End']).dt.date     
     
-    df1 = df1[df1['DATE'] >= start_date] 
-    df1 = df1[df1['DATE'] <= end_date]
+    coll, colr = st.columns(2)
     
-    df2 = df2[df2['DATE'] >= start_date]
-    df2 = df2[df2['DATE'] <= end_date]
+    with coll:   
+        start_date = st.selectbox('Start date', options = intervals['Start'])
     
-    df3 = df3[df3['DATE'] >= start_date]
-    df3 = df3[df3['DATE'] <= end_date]
+    intervals1 = intervals.loc[intervals['End']>start_date]    
     
-    df_events = df_events[df_events['end'] >= start_date]
-    df_events = df_events[df_events['start'] <= end_date]
+    with colr:    
+        end_date = st.selectbox('End date', options = intervals1['End'])
     
+    timeline = intervals[intervals['Start'] >= start_date]
+    timeline = timeline[timeline['End'] <= end_date]
     
-    delta = pd.DataFrame([])
-    
-    std = pd.DataFrame([])
-    
-    for c in range(2,len(df.columns)):
-        
-        ds = pd.DataFrame([[df.columns[c], df.iloc[-1,c] - df.iloc[0,c]]])
-        var = pd.DataFrame([[df.columns[c], df.iloc[:,c].std()]])
-        delta = pd.concat([delta, ds])
-        std = pd.concat([std, var])
-        
-    for c in range(2,len(df1.columns)):
-        
-        try:
-            ds = pd.DataFrame([[df1.columns[c], df1.iloc[-1,c] - df1.iloc[0,c]]])
-            var = pd.DataFrame([[df1.columns[c], df1.iloc[:,c].std()]])
-            delta = pd.concat([delta, ds])
-            std = pd.concat([std, var])
-        except:
-            pass
-        
-    for c in range(2,len(df2.columns)):
-        
-        try:
-            ds = pd.DataFrame([[df2.columns[c], df2.iloc[-1,c] - df2.iloc[0,c]]])
-            delta = pd.concat([delta, ds])
-            var = pd.DataFrame([[df2.columns[c], df2.iloc[:,c].std()]])
-            std = pd.concat([std, var])
-        except:
-            pass
-
-    for c in range(2,len(df3.columns)):
-        
-        try:
-            ds = pd.DataFrame([[df3.columns[c], df3.iloc[-1,c] - df3.iloc[0,c]]])
-            delta = pd.concat([delta, ds]) 
-            var = pd.DataFrame([[df3.columns[c], df3.iloc[:,c].std()]])
-            std = pd.concat([std, var])
-        except:
-            pass
-        
-    delta.columns = ['index', 'value']
-    std.columns = ['index', 'value']
-    delta = delta[delta['index'].isin(diff_columns)]
-    std = std[std['index'].isin(cols)]
-
-        
-    pct = pd.DataFrame([])
-    
-    for c in range(2,len(df.columns)):
-        
-        ds = pd.DataFrame([[df.columns[c], 100*(df.iloc[-1,c] - df.iloc[0,c])/df.iloc[0,c]]])
-        pct = pd.concat([pct, ds])
-        
-    for c in range(2,len(df1.columns)):
-        
-        try:
-            ds = pd.DataFrame([[df1.columns[c], 100*(df1.iloc[-1,c] - df1.iloc[0,c])/df1.iloc[0,c]]])
-            pct = pd.concat([pct, ds])
-        except:
-            pass
-
-    for c in range(2,len(df2.columns)):
-        
-        try:
-            ds = pd.DataFrame([[df2.columns[c], 100*(df2.iloc[-1,c] - df2.iloc[0,c])/df2.iloc[0,c]]])
-            pct = pd.concat([pct, ds])
-        except:
-            pass
-        
-    for c in range(2,len(df3.columns)):
-        
-        try:
-            ds = pd.DataFrame([[df3.columns[c], 100*(df3.iloc[-1,c] - df3.iloc[0,c])/df3.iloc[0,c]]])
-            pct = pd.concat([pct, ds])  
-        except:
-            pass
-        
-    pct.columns = ['index', 'value']
-    pct = pct[pct['index'].isin(pct_columns)]
-        
- 
-    change = pd.concat([pct, delta])
-
-    
-    change['stats'] = 'Delta'
-    std['stats'] = 'STD'
-    
-    # change = pd.concat([change, std])
-    
-    change['color'] = np.where(change["value"]<0, 'red', 'green')
-    
-    change.columns = ['Indicator', 'Value', 'Stats', 'color']
-    
-
-    
-    fig_summary = px.bar(change,
-                  x="Indicator",
-                  y='Value',
-                  # color = 'color',
-                  # barmode = 'group',
-                  # pattern_shape="Stats"
-                  )
-    
-    # fig_summary.update_layout(legend_title="Stats", bargap=0.5,bargroupgap=0.1)
-
-    fig_summary.update_traces(marker_color=change['color'])
-    
-    # fig_summary.for_each_trace(
-    #     lambda trace: trace.update(marker_color=np.where(change.loc[change['Stats'].eq(trace.name), 'Value'] < 0, 'red', 'green'))
-    # )
-    
-    fig_event = px.timeline(df_events.sort_values('start'),
-                  x_start="start",
-                  x_end="end",
-                  y="event",
-                  text="remark",
+    fig_event = px.timeline(timeline.sort_values('Start'),
+                  x_start="Start",
+                  x_end="End",
+                  y="Summary",
+                  # text="remark",
                   color_discrete_sequence=["tan"])
     
     
-    # plotly setup DJI
-    fig_dji = px.line(df, x=df['DATE'], y=['DJI'])
-    fig_dji.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
-    fig_dji.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
-    
-    fig_dji = bgLevels(df=df, fig = fig_dji, variable = 'USRECDM', level = 0.5, mode = 'above',
-                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
-
-
-
-
-    # Display
-
-    
-    
-    
-    
-    st.title('概览') 
-    st.plotly_chart(fig_summary)
-    
-    
-    
-
-    
-    st.title('事件')
     st.plotly_chart(fig_event)
+
+    start_year = start_date.replace(month=1, day=1) 
+    end_year = end_date.replace(month=12, day=31) 
+    
+    df = df[df['DATE'] >= start_year]
+    df = df[df['DATE'] <= end_year]
+    
+    df1 = df1[df1['DATE'] >= start_year] 
+    df1 = df1[df1['DATE'] <= end_year]
+    
+    df2 = df2[df2['DATE'] >= start_year]
+    df2 = df2[df2['DATE'] <= end_year]
+    
+    df3 = df3[df3['DATE'] >= start_year]
+    df3 = df3[df3['DATE'] <= end_year]
+    
+    df_events = df_events[df_events['end'] >= start_year]
+    df_events = df_events[df_events['start'] <= end_year]
     
     
+    col1, col2, col3, col4 = st.columns(4)
+    
+    # Market Plots
+    
+    df.plot(x = 'DATE', y = 'SP500')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("SP500", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    
+    with col1:
+        st.pyplot(fig=plt)
         
-    st.title('道琼斯指数')
-    st.plotly_chart(fig_dji)
+    df1.plot(x = 'DATE', y = 'SP500PE', title='SP500PE')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("SP500PE", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col2:
+        st.pyplot(fig=plt)  
+        
+    if start_year <= datetime.date(1982, 12, 31):    
+        
+        df1.plot(x = 'DATE', y = 'Discount_Rate', title='Discount Rate')
+        plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+        plt.xticks(rotation=45)
+        plt.title("Discount Rate", fontsize = 24)
+        plt.tick_params(axis='both', which='major', labelsize=16)        
+            
+        with col3:
+            st.pyplot(fig=plt)
+    else:
+         df.plot(x = 'DATE', y = ['DFEDTARL', 'DFEDTARU'], title='Federal Fund Rate')
+         plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+         plt.xticks(rotation=45)
+         plt.title("Federal Fund Rate", fontsize = 24)
+         plt.tick_params(axis='both', which='major', labelsize=16)
+         
+         with col3:
+             st.pyplot(fig=plt) 
+    
+    
+    df.plot(x = 'DATE', y = 'DJI', title='Dow Jones')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("Dow Jones", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col4:
+        st.pyplot(fig=plt) 
+        
+    col5, col6, col7, col8 = st.columns(4)        
+        
+    df.plot(x = 'DATE', y = ['DTB3', 'DGS10'], title='Bond Yield: 3M Vs 10Y')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("Bond Yield: 3M Vs 10Y", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col5:
+        st.pyplot(fig=plt)     
+        
+    df1.plot(x = 'DATE', y = ['CPI_YoY', 'PPI_YoY', 'Core_CPI_YoY'], title='(Core) CPI and PPI, YoY')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("'(Core) CPI and PPI, YoY'", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col6:
+        st.pyplot(fig=plt)          
+        
+    df1.plot(x = 'DATE', y = ['Unemployment_Rate'], title='Unemployment Rate')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("Unemployment Rate", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)    
+
+    
+    with col7:
+        st.pyplot(fig=plt)  
+        
+    df2.plot(x = 'DATE', y = ['Nominal_GDP_YoY', 'Real_GDP_YoY'], title='GDP, YoY')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("GDP, YoY", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col8:
+        st.pyplot(fig=plt)     
+        
+    col9, col10, col11, col12 = st.columns(4)
+        
+    df1.plot(x = 'DATE', y = ['Indus_Production_YoY'], title='Industrial Production, YoY')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("Industrial Production, YoY", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col9:
+        st.pyplot(fig=plt)    
         
 
-        
 
 
 
