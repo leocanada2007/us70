@@ -62,6 +62,7 @@ def tab1():
     
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
+
     
     df1 = pd.read_csv('data/monthly.csv')
     df1['DATE'] = pd.to_datetime(df1['DATE']).dt.date
@@ -131,7 +132,7 @@ def tab1():
     plt.xticks(rotation=45)
     plt.title("SP500", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
-    plt.fill_between(df['DATE], 15, where = df['USRECDM'] == 1, alpha=0.3, interpolate=True)    
+
 
     
     
