@@ -267,7 +267,34 @@ def tab1():
 
 
             
+    col13, col14, col15, col16 = st.columns(4)
+        
+    df.plot(x = 'DATE', y = ['WTI'], title='WTI Oil Price')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title('WTI Oil Price', fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col13:
+        st.pyplot(fig=plt) 
 
+    df1.plot(x = 'DATE', y = ['Disposable_Income_YoY', 'PCE_YoY'], title='Income and PCE')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title('Income and PCE', fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col14:
+        st.pyplot(fig=plt)     
+
+    df3.plot(x = 'DATE', y = ['Gold_reserves_billion'], title='Gold Reserve (Billion)')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title('Gold Reserve (Billion)', fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col15:
+        st.pyplot(fig=plt) 
 
 
 
