@@ -142,6 +142,29 @@ def tab1():
     
     with col2:
         st.pyplot(fig=plt)  
+
+
+    df.plot(x = 'DATE', y = 'DJI', title='Dow Jones')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("Dow Jones", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col3:
+        st.pyplot(fig=plt) 
+
+    df.plot(x = 'DATE', y = 'IXIC', title='Nasdaq')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("Dow Jones", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col4:
+        st.pyplot(fig=plt) 
+
+
+    col5, col6, col7, col8 = st.columns(4)      
+    
         
     if start_year <= datetime.date(1982, 12, 31):    
         
@@ -151,7 +174,7 @@ def tab1():
         plt.title("Discount Rate", fontsize = 24)
         plt.tick_params(axis='both', which='major', labelsize=16)        
             
-        with col3:
+        with col5:
             st.pyplot(fig=plt)
     else:
          df.plot(x = 'DATE', y = ['DFEDTARL', 'DFEDTARU'], title='Federal Fund Rate')
@@ -160,20 +183,9 @@ def tab1():
          plt.title("Federal Fund Rate", fontsize = 24)
          plt.tick_params(axis='both', which='major', labelsize=16)
          
-         with col3:
-             st.pyplot(fig=plt) 
-    
-    
-    df.plot(x = 'DATE', y = 'DJI', title='Dow Jones')
-    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
-    plt.xticks(rotation=45)
-    plt.title("Dow Jones", fontsize = 24)
-    plt.tick_params(axis='both', which='major', labelsize=16)
-    
-    with col4:
-        st.pyplot(fig=plt) 
-        
-    col5, col6, col7, col8 = st.columns(4)        
+         with col5:
+             st.pyplot(fig=plt)
+  
         
     df.plot(x = 'DATE', y = ['DTB3', 'DGS10'], title='Bond Yield: 3M Vs 10Y')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
@@ -181,7 +193,7 @@ def tab1():
     plt.title("Bond Yield: 3M Vs 10Y", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
-    with col5:
+    with col6:
         st.pyplot(fig=plt)     
         
     df1.plot(x = 'DATE', y = ['CPI_YoY', 'PPI_YoY', 'Core_CPI_YoY'], title='(Core) CPI and PPI, YoY')
@@ -190,7 +202,7 @@ def tab1():
     plt.title("'(Core) CPI and PPI, YoY'", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
-    with col6:
+    with col7:
         st.pyplot(fig=plt)          
         
     df1.plot(x = 'DATE', y = ['Unemployment_Rate'], title='Unemployment Rate')
@@ -200,8 +212,10 @@ def tab1():
     plt.tick_params(axis='both', which='major', labelsize=16)    
 
     
-    with col7:
+    with col8:
         st.pyplot(fig=plt)  
+
+    col9, col10, col11, col12 = st.columns(4)
         
     df2.plot(x = 'DATE', y = ['Nominal_GDP_YoY', 'Real_GDP_YoY'], title='GDP, YoY')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
@@ -209,10 +223,10 @@ def tab1():
     plt.title("GDP, YoY", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
-    with col8:
+    with col9:
         st.pyplot(fig=plt)     
         
-    col9, col10, col11, col12 = st.columns(4)
+
         
     df1.plot(x = 'DATE', y = ['Indus_Production_YoY'], title='Industrial Production, YoY')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
@@ -220,7 +234,7 @@ def tab1():
     plt.title("Industrial Production, YoY", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
-    with col9:
+    with col10:
         st.pyplot(fig=plt)    
         
     df2.plot(x = 'DATE', y = ['CP_QoQ'], title='Corporate Profit, QoQ')
@@ -229,7 +243,7 @@ def tab1():
     plt.title("Corporate Profit, QoQ", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
-    with col10:
+    with col11:
         st.pyplot(fig=plt)  
 
 
@@ -241,7 +255,7 @@ def tab1():
     plt.title("Retail Sales, MoM", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
-    with col11:
+    with col12:
         st.pyplot(fig=plt)   
 
 
