@@ -156,7 +156,7 @@ def tab1():
     df.plot(x = 'DATE', y = 'IXIC', title='Nasdaq')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
     plt.xticks(rotation=45)
-    plt.title("Dow Jones", fontsize = 24)
+    plt.title("Nasdaq", fontsize = 24)
     plt.tick_params(axis='both', which='major', labelsize=16)
     
     with col4:
