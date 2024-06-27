@@ -226,16 +226,26 @@ def tab1():
     with col9:
         st.pyplot(fig=plt)     
         
-
+    if start_year <= datetime.date(1991, 12, 31): 
         
-    df1.plot(x = 'DATE', y = ['Indus_Production_YoY'], title='Industrial Production, YoY')
-    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
-    plt.xticks(rotation=45)
-    plt.title("Industrial Production, YoY", fontsize = 24)
-    plt.tick_params(axis='both', which='major', labelsize=16)
+        df1.plot(x = 'DATE', y = ['Indus_Production_YoY'], title='Industrial Production, YoY')
+        plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+        plt.xticks(rotation=45)
+        plt.title("Industrial Production, YoY", fontsize = 24)
+        plt.tick_params(axis='both', which='major', labelsize=16)
+        
+        with col10:
+            st.pyplot(fig=plt) 
+    else:
+        df1.plot(x = 'DATE', y = ['RSAFS_MoM'], title='Retail Sales, MoM')
+        plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+        plt.xticks(rotation=45)
+        plt.title("Retail Sales, MoM", fontsize = 24)
+        plt.tick_params(axis='both', which='major', labelsize=16)
+        
+        with col10:
+            st.pyplot(fig=plt)   
     
-    with col10:
-        st.pyplot(fig=plt)    
         
     df2.plot(x = 'DATE', y = ['CP_QoQ'], title='Corporate Profit, QoQ')
     plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
@@ -249,14 +259,7 @@ def tab1():
 
             
 
-    df1.plot(x = 'DATE', y = ['RSAFS_MoM'], title='Retail Sales, MoM')
-    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
-    plt.xticks(rotation=45)
-    plt.title("Retail Sales, MoM", fontsize = 24)
-    plt.tick_params(axis='both', which='major', labelsize=16)
-    
-    with col12:
-        st.pyplot(fig=plt)   
+
 
 
     
