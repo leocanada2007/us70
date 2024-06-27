@@ -256,6 +256,15 @@ def tab1():
     with col11:
         st.pyplot(fig=plt)  
 
+    df.plot(x = 'DATE', y = ['US_Dollar_Index'], title='US Dollar Index')
+    plt.axvspan(start_date, end_date, color = 'red', alpha = 0.25)
+    plt.xticks(rotation=45)
+    plt.title("US Dollar Index", fontsize = 24)
+    plt.tick_params(axis='both', which='major', labelsize=16)
+    
+    with col12:
+        st.pyplot(fig=plt)  
+
 
             
 
