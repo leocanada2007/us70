@@ -617,6 +617,14 @@ def tab4():
     
     fig_wti = bgLevels(df=df, fig = fig_wti, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+    # plotly setup USD Index
+    fig_usd = px.line(df, x=df['DATE'], y=['US_Dollar_Index'])
+    fig_usd.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_usd.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_usd = bgLevels(df=df, fig = fig_wti, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
     
     
     
@@ -624,23 +632,23 @@ def tab4():
     
     # Display
     
-    
-    
-    
+    st.title('标普500市盈率')
+    st.plotly_chart(fig_pe)
+
+    st.title('美元指数')
+    st.plotly_chart(fig_usd)    
+
+    st.title('WTI原油价格')
+    st.plotly_chart(fig_wti)
+
+    st.title('长(10Y)短(3M)期国债收益')
+    st.plotly_chart(fig_3m)
+
     st.title('美联储贴现利率 (Discount Rate)')
     st.plotly_chart(fid_discount_rate)
 
     st.title('联邦基金目标利率（通道）')
     st.plotly_chart(fid_ff_rate)
-    
-    st.title('长(10Y)短(3M)期国债收益')
-    st.plotly_chart(fig_3m)
-    
-    st.title('WTI原油价格')
-    st.plotly_chart(fig_wti)
-
-    st.title('标普500市盈率')
-    st.plotly_chart(fig_pe)
     
     st.title('黄金储备（十亿）')
     st.plotly_chart(fig_gold)
