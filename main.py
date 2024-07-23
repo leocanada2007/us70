@@ -888,9 +888,56 @@ def tab7():
 # Tab 8 Rate Cut
 #==============================================================================
 
-rate_cut_intervals = pd.read_csv('data/rate_cut.csv')
+def tab_rate_cut():
 
-selected_period = st.selectbox("Select an interval", rate_cut_intervals.Summary.unique())
+    df = pd.read_csv('data/daily.csv')
+    df['DATE'] = pd.to_datetime(df['DATE']).dt.date
+
+    
+    df1 = pd.read_csv('data/monthly.csv')
+    df1['DATE'] = pd.to_datetime(df1['DATE']).dt.date
+    
+    df2 = pd.read_csv('data/quarterly.csv')
+    df2['DATE'] = pd.to_datetime(df2['DATE']).dt.date
+    
+    df3 = pd.read_csv('data/weekly.csv')
+    df3['DATE'] = pd.to_datetime(df3['DATE']).dt.date
+    
+    df_events = pd.read_csv('data/events.csv')
+    df_events['start'] = pd.to_datetime(df_events['start']).dt.date
+    df_events['end'] = pd.to_datetime(df_events['end']).dt.date
+
+    intervals = pd.read_csv(r'data/intervals.csv')
+    intervals['Start'] = pd.to_datetime(intervals['Start']).dt.date
+    intervals['End'] = pd.to_datetime(intervals['End']).dt.date 
+
+    rate_cut_intervals = pd.read_csv('data/rate_cut.csv')
+    rate_cut_intervals['Start'] = pd.to_datetime(rate_cut_intervals['Start']).dt.date
+    rate_cut_intervals['End'] = pd.to_datetime(rate_cut_intervals['End']).dt.date
+    
+    selected_period = st.selectbox("Select an interval", rate_cut_intervals.Summary.unique())
+
+    rate_cut_intervals = rate_cut_intervals[rate_cut_intervals['Summary'] == selected_period]
+
+    start_date = rate_cut_intervals.iloc[0,0]
+    end_date = rate_cut_intervals.iloc[0,1]
+
+    start_year = start_date.replace(month=1, day=1) 
+    end_year = end_date.replace(month=12, day=31) 
+
+    timeline = intervals[intervals['Start'] >= start_date]
+    timeline = timeline[timeline['End'] <= end_date]
+    
+    fig_event = px.timeline(timeline.sort_values('Start'),
+                  x_start="Start",
+                  x_end="End",
+                  y="Summary",
+                  # text="remark",
+                  color_discrete_sequence=["tan"])
+    
+    
+    st.plotly_chart(fig_event)
+    
 
 
 #==============================================================================
