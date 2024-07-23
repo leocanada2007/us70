@@ -890,7 +890,7 @@ def tab7():
 
 rate_cut_intervals = pd.read_csv('data/rate_cut.csv')
 
-selected_period = st.selectbox("Select an interval", rate_cut_intervals.summary.unique())
+selected_period = st.selectbox("Select an interval", rate_cut_intervals.Summary.unique())
 
 
 #==============================================================================
