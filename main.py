@@ -937,6 +937,9 @@ def tab_8():
     df3 = df3[df3['DATE'] >= start_year]
     df3 = df3[df3['DATE'] <= end_year]
 
+    timeline = intervals[intervals['Start'] >= start_date]
+    timeline = timeline[timeline['End'] <= end_date]
+
 # plotly setup DJI
     fig_dji = px.line(df, x=df['DATE'], y=['DJI'])
     fig_dji.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
@@ -985,6 +988,18 @@ def tab_8():
     
     fig_3m = bgLevels(df=df, fig = fig_3m, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+    
+
+    
+    fig_event = px.timeline(timeline.sort_values('Start'),
+                  x_start="Start",
+                  x_end="End",
+                  y="Summary",
+                  # text="remark",
+                  color_discrete_sequence=["tan"])
+    
+    
+
 
 
 
@@ -1011,6 +1026,9 @@ def tab_8():
 
     st.title('长(10Y)短(3M)期国债收益')
     st.plotly_chart(fig_3m)
+
+    st.title('事件')
+    st.plotly_chart(fig_event)
     
 
     
