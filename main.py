@@ -922,8 +922,8 @@ def tab_8():
     start_date = rate_cut_intervals.iloc[0,0]
     end_date = rate_cut_intervals.iloc[0,1]
 
-    start_year = start_date.replace(month=1, day=1) 
-    end_year = end_date.replace(month=12, day=31) 
+    start_year = start_date.apply(lambda x: x.replace(month=1, day=1, year = x.year - 1))
+    end_year = end_date.apply(lambda x: x.replace(month=12, day=31, year = x.year + 1))
 
     timeline = intervals[intervals['Start'] >= start_year]
     timeline = timeline[timeline['End'] <= end_year]
