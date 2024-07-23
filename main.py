@@ -888,7 +888,7 @@ def tab7():
 # Tab 8 Rate Cut
 #==============================================================================
 
-def tab_rate_cut():
+def tab_8():
 
     df = pd.read_csv('data/daily.csv')
     df['DATE'] = pd.to_datetime(df['DATE']).dt.date
@@ -917,7 +917,27 @@ def tab_rate_cut():
     
     selected_period = st.selectbox("Select an interval", rate_cut_intervals.Summary.unique())
 
+    rate_cut_intervals = rate_cut_intervals[rate_cut_intervals['Summary'] == selected_period]
 
+    start_date = rate_cut_intervals.iloc[0,0]
+    end_date = rate_cut_intervals.iloc[0,1]
+
+    start_year = start_date.replace(month=1, day=1) 
+    end_year = end_date.replace(month=12, day=31) 
+
+    timeline = intervals[intervals['Start'] >= start_date]
+    timeline = timeline[timeline['End'] <= end_date]
+    
+    fig_event = px.timeline(timeline.sort_values('Start'),
+                  x_start="Start",
+                  x_end="End",
+                  y="Summary",
+                  # text="remark",
+                  color_discrete_sequence=["tan"])
+    
+    
+    st.plotly_chart(fig_event)
+    
 
 
 #==============================================================================
@@ -945,7 +965,9 @@ def run():
     elif select_tab == '纳斯达克区间划分':
         tab6()    
     elif select_tab == 'SP500区间划分':
-        tab7()            
+        tab7()    
+    elif select_tab == '降息':
+        tab_8()        
         
 if __name__ == "__main__":
     run()   
