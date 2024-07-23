@@ -937,8 +937,8 @@ def tab_8():
     df3 = df3[df3['DATE'] >= start_year]
     df3 = df3[df3['DATE'] <= end_year]
 
-    timeline = intervals[intervals['Start'] >= start_date]
-    timeline = timeline[timeline['End'] <= end_date]
+    timeline = intervals[intervals['Start'] >= start_year]
+    timeline = timeline[timeline['End'] <= end_year]
 
 # plotly setup DJI
     fig_dji = px.line(df, x=df['DATE'], y=['DJI'])
