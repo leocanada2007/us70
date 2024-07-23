@@ -962,7 +962,29 @@ def tab_8():
     fig_spx = bgLevels(df=df, fig = fig_spx, variable = 'USRECDM', level = 0.5, mode = 'above',
                    fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
 
+    # plotly setup Discount rate
+    fid_discount_rate = px.line(df1, x=df1['DATE'], y=['Discount_Rate'])
+    fid_discount_rate.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fid_discount_rate.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
     
+    fid_discount_rate = bgLevels(df=df1, fig = fid_discount_rate, variable = 'Recession', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+    # plotly setup Federal Fund rate
+    fid_ff_rate = px.line(df, x=df['DATE'], y=['DFEDTARL', 'DFEDTARU'])
+    fid_ff_rate.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fid_ff_rate.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fid_ff_rate = bgLevels(df=df, fig = fid_ff_rate, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+    # plotly setup 3 Month Year Treasury
+    fig_3m = px.line(df, x=df['DATE'], y=['DTB3', 'DGS10'])
+    fig_3m.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_3m.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_3m = bgLevels(df=df, fig = fig_3m, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
 
 
 
@@ -974,11 +996,23 @@ def tab_8():
     st.title('道琼斯')
     st.plotly_chart(fig_dji)
 
-    st.title('纳斯达克')
-    st.plotly_chart(fig_ixic)
-    
     st.title('标普500')
     st.plotly_chart(fig_spx)   
+
+    st.title('纳斯达克')
+    st.plotly_chart(fig_ixic)
+
+
+    st.title('美联储贴现利率 (Discount Rate)')
+    st.plotly_chart(fid_discount_rate)
+
+    st.title('联邦基金目标利率（通道')
+    st.plotly_chart(fid_ff_rate)
+
+    st.title('长(10Y)短(3M)期国债收益')
+    st.plotly_chart(fig_3m)
+    
+
     
 
 
