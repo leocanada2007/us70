@@ -925,18 +925,60 @@ def tab_8():
     start_year = start_date.replace(month=1, day=1, year = start_date.year - 1)
     end_year = end_date.replace(month=12, day=31, year = end_date.year + 1)
 
-    timeline = intervals[intervals['Start'] >= start_year]
-    timeline = timeline[timeline['End'] <= end_year]
+    df = df[df['DATE'] >= start_year]
+    df = df[df['DATE'] <= end_year]
     
-    fig_event = px.timeline(timeline.sort_values('Start'),
-                  x_start="Start",
-                  x_end="End",
-                  y="Summary",
-                  # text="remark",
-                  color_discrete_sequence=["tan"])
+    df1 = df1[df1['DATE'] >= start_year] 
+    df1 = df1[df1['DATE'] <= end_year]
     
+    df2 = df2[df2['DATE'] >= start_year]
+    df2 = df2[df2['DATE'] <= end_year]
     
-    st.plotly_chart(fig_event)
+    df3 = df3[df3['DATE'] >= start_year]
+    df3 = df3[df3['DATE'] <= end_year]
+
+# plotly setup DJI
+    fig_dji = px.line(df, x=df['DATE'], y=['DJI'])
+    fig_dji.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_dji.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_dji = bgLevels(df=df, fig = fig_dji, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+
+    # plotly setup Nasdaq
+    fig_ixic = px.line(df, x=df['DATE'], y=['IXIC'])
+    fig_ixic.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_ixic.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_ixic = bgLevels(df=df, fig = fig_ixic, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+    # plotly setup SP500
+    fig_spx = px.line(df, x=df['DATE'], y=['SP500'])
+    fig_spx.update_xaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    fig_spx.update_yaxes(showgrid=False, gridwidth=1, gridcolor='rgba(0,0,255,0.1)')
+    
+    fig_spx = bgLevels(df=df, fig = fig_spx, variable = 'USRECDM', level = 0.5, mode = 'above',
+                   fillcolor = 'rgba(100,100,100,0.2)', layer = 'below')
+
+    
+
+
+
+
+
+
+    # Display   
+
+    st.title('道琼斯')
+    st.plotly_chart(fig_dji)
+
+    st.title('纳斯达克')
+    st.plotly_chart(fig_ixic)
+    
+    st.title('标普500')
+    st.plotly_chart(fig_spx)   
     
 
 
