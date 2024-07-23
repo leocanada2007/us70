@@ -917,27 +917,7 @@ def tab_rate_cut():
     
     selected_period = st.selectbox("Select an interval", rate_cut_intervals.Summary.unique())
 
-    rate_cut_intervals = rate_cut_intervals[rate_cut_intervals['Summary'] == selected_period]
 
-    start_date = rate_cut_intervals.iloc[0,0]
-    end_date = rate_cut_intervals.iloc[0,1]
-
-    start_year = start_date.replace(month=1, day=1) 
-    end_year = end_date.replace(month=12, day=31) 
-
-    timeline = intervals[intervals['Start'] >= start_date]
-    timeline = timeline[timeline['End'] <= end_date]
-    
-    fig_event = px.timeline(timeline.sort_values('Start'),
-                  x_start="Start",
-                  x_end="End",
-                  y="Summary",
-                  # text="remark",
-                  color_discrete_sequence=["tan"])
-    
-    
-    st.plotly_chart(fig_event)
-    
 
 
 #==============================================================================
